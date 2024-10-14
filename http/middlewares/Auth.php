@@ -9,8 +9,8 @@
 
 namespace app\http\middlewares;
 
-use app\system\interfaces\MiddlewareInterface;
 use app\system\Middleware;
+use app\system\MiddlewareInterface;
 use Exception;
 
 /**

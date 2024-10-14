@@ -7,7 +7,7 @@
  * @time        6:10 AM
  */
 
-namespace app\system\interfaces;
+namespace app\system;
 
 /**
  * MiddlewareInterface class.

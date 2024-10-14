@@ -9,8 +9,8 @@
 
 namespace app\models;
 
-use app\system\interfaces\ModelInterface;
 use app\system\Model;
+use app\system\ModelInterface;
 
 /**
  * Class User.
