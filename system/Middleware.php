@@ -14,7 +14,7 @@ namespace app\system;
  *
  * This is the base middleware class.
  */
-abstract class Middleware {
+class Middleware {
 
 	/**
 	 * @var array|mixed $actions List of actions will apply this middleware
@@ -29,10 +29,5 @@ abstract class Middleware {
 	public function __construct( array $actions = [] ) {
 		$this->actions = $actions;
 	}
-
-	/**
-	 * Execute the middleware.
-	 */
-	abstract public function invoke();
 
 }

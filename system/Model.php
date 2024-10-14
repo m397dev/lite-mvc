@@ -9,6 +9,23 @@
 
 namespace app\system;
 
+/**
+ * Class Model.
+ *
+ * This is the base model.
+ */
 class Model {
+
+	/**
+	 * @var Database $db Database instance
+	 */
+	public Database $db;
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->db = new Database();
+	}
 
 }

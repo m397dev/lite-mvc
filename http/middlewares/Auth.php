@@ -9,6 +9,7 @@
 
 namespace app\http\middlewares;
 
+use app\system\interfaces\MiddlewareInterface;
 use app\system\Middleware;
 use Exception;
 
@@ -17,7 +18,7 @@ use Exception;
  *
  * Authentication middleware.
  */
-class Auth extends Middleware {
+class Auth extends Middleware implements MiddlewareInterface {
 
 	/**
 	 * @var bool $isGuest Check this current access has logged in or not

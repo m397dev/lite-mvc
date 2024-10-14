@@ -9,6 +9,28 @@
 
 namespace app\models\forms;
 
-class Login {
+use app\system\Model;
+
+/**
+ * Class Login.
+ *
+ * This model performs login form.
+ */
+class Login extends Model {
+
+	/**
+	 * @var string $username
+	 */
+	public string $username;
+
+	/**
+	 * @var string $password
+	 */
+	public string $password;
+
+	/**
+	 * @var bool $rememberMe
+	 */
+	public bool $rememberMe = false;
 
 }
