@@ -9,7 +9,6 @@
 
 namespace app\system;
 
-use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -68,27 +67,6 @@ class Request {
 			],
 			default => [],
 		};
-	}
-
-	/**
-	 * Set HTTP response status.
-	 *
-	 * @param  int  $code
-	 * @param  string  $errorPath
-	 *
-	 * @return void
-	 */
-	#[NoReturn] public function setHttpResponse(
-		int $code,
-		string $errorPath = ''
-	): void {
-		http_response_code( $code );
-
-		if ( ! is_null( $errorPath ) ) {
-			require $errorPath;
-		}
-
-		exit();
 	}
 
 	/**

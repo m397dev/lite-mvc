@@ -1,0 +1,14 @@
+Options +FollowSymlinks -MultiViews
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^([^.]+)$ $1.php [NC,L]
+
+# Rewrite page begin
+
+RewriteRule ^index.php / [R=301,NC,L]
+
+# Rewrite page end
