@@ -9,7 +9,10 @@
 
 namespace app\system;
 
+use EasyCSRF\EasyCSRF;
+use EasyCSRF\NativeSessionProvider;
 use Exception;
+use voku\helper\AntiXSS;
 
 /**
  * Class App.
@@ -43,6 +46,14 @@ class App {
 	 */
 	public mixed $assets = [];
 	/**
+	 * @var EasyCSRF $csrf Csrf instance
+	 */
+	public EasyCSRF $csrf;
+	/**
+	 * @var AntiXSS $xss AntiXss instance
+	 */
+	public AntiXSS $xss;
+	/**
 	 * @var array $eventListeners Event listeners
 	 */
 	protected array $eventListeners = [];
@@ -56,6 +67,8 @@ class App {
 		self::$app    = $this;
 		$this->router = new Router();
 		$this->view   = new View( $rootDir );
+		$this->csrf   = new EasyCSRF( new NativeSessionProvider() );
+		$this->xss    = new AntiXSS();
 		$this->params = require $rootDir . '/config/params.php';
 		$this->assets = require $rootDir . '/config/assets.php';
 	}

@@ -30,7 +30,9 @@
     "phpfastcache/phpfastcache": "^9.2",
     "gregwar/captcha": "1.*",
     "phpmailer/phpmailer": "^6.9",
-    "nilportugues/sql-query-builder": "^1.8"
+    "nilportugues/sql-query-builder": "^1.8",
+    "voku/anti-xss": "^4.1",
+    "gilbitron/easycsrf": "^1.5"
   },
   "require-dev": {
     "maximebf/debugbar": "1.*"
