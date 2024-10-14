@@ -1,1 +1,53 @@
 <?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use app\lib\DBMigration;
+
+/**
+ * Return an instance of the DBMigration class.
+ *
+ * @return DBMigration
+ */
+function ref(): DBMigration {
+	return new DBMigration();
+}
+
+/**
+ * Create new migration.
+ *
+ * @param  string  $migrationName
+ *
+ * @return void
+ */
+function create( string $migrationName ): void {
+	ref()->createMigration( $migrationName );
+}
+
+/**
+ * Apply all current migrations.
+ *
+ * @return void
+ */
+function apply(): void {
+	ref()->applyMigrations();
+}
+
+/**
+ * Down an applied migrations.
+ *
+ * @param  string  $migrationName
+ *
+ * @return void
+ */
+function down( string $migrationName ): void {
+	ref()->downMigrations( $migrationName );
+}
+
+/**
+ * Callable in terminal.
+ */
+if ( isset( $argv[1] ) && function_exists( $argv[1] ) ) {
+	$parameters = array_slice( $argv, 2 );
+	call_user_func( $argv[1], ...$parameters );
+}
