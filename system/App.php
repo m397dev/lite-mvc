@@ -27,41 +27,21 @@ class App {
 	 */
 	public static App $app;
 	/**
-	 * @var string $rootDir Root directory
-	 */
-	public static string $rootDir;
-	/**
-	 * @var string $layout Layout file name
-	 */
-	public string $layout = 'main';
-	/**
 	 * @var Router $router Instance of the Router class
 	 */
 	public Router $router;
 	/**
-	 * @var Request $request Instance of the Request class
-	 */
-	public Request $request;
-	/**
-	 * @var Session $session Instance of the Session class
-	 */
-	public Session $session;
-	/**
-	 * @var Cookie $cookie Instance of the Cookie class
-	 */
-	public Cookie $cookie;
-	/**
-	 * @var Controller|null $controller Instance of the Controller class
-	 */
-	public ?Controller $controller = null;
-	/**
-	 * @var Database $db Instance of the Database class
-	 */
-	public Database $db;
-	/**
 	 * @var View $view Instance of the View class
 	 */
 	public View $view;
+	/**
+	 * @var array $params Web parameters configuration
+	 */
+	public mixed $params = [];
+	/**
+	 * @var array $assets Web assets configuration
+	 */
+	public mixed $assets = [];
 	/**
 	 * @var array $eventListeners Event listeners
 	 */
@@ -73,14 +53,11 @@ class App {
 	 * @param $rootDir
 	 */
 	public function __construct( $rootDir ) {
-		self::$rootDir = $rootDir;
-		self::$app     = $this;
-		$this->request = new Request();
-		$this->router  = new Router( $this->request );
-		$this->session = new Session();
-		$this->cookie  = new Cookie();
-		$this->db      = new Database();
-		$this->view    = new View( $rootDir );
+		self::$app    = $this;
+		$this->router = new Router();
+		$this->view   = new View( $rootDir );
+		$this->params = require $rootDir . '/config/params.php';
+		$this->assets = require $rootDir . '/config/assets.php';
 	}
 
 	/**
@@ -93,8 +70,10 @@ class App {
 
 		try {
 			echo $this->router->resolve();
+
+			$this->triggerEvent( self::EVENT_AFTER_REQUEST );
 		} catch ( Exception $e ) {
-			$this->layout = '_blank';
+			$this->view->layout = '_blank';
 
 			echo $this->view->renderView( '/error', [ 'exception' => $e ] );
 		}
@@ -113,6 +92,18 @@ class App {
 		foreach ( $callbacks as $callback ) {
 			call_user_func( $callback );
 		}
+	}
+
+	/**
+	 * Setup list of events.
+	 *
+	 * @param $eventName
+	 * @param $callback
+	 *
+	 * @return void
+	 */
+	public function setEvent( $eventName, $callback ): void {
+		$this->eventListeners[ $eventName ][] = $callback;
 	}
 
 }

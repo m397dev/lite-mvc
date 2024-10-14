@@ -17,24 +17,23 @@ namespace app\system;
 class View {
 
 	/**
+	 * @var string $rootDir Root directory
+	 */
+	public string $rootDir;
+	/**
+	 * @var string $layout Page layout
+	 */
+	public string $layout = 'main';
+	/**
 	 * @var string $title Page title
 	 */
 	public string $title = '';
-	/**
-	 * @var array $params Web parameters configuration
-	 */
-	public mixed $params = [];
-	/**
-	 * @var array $assets Web assets configuration
-	 */
-	public mixed $assets = [];
 
 	/**
 	 * View Constructor.
 	 */
 	public function __construct( string $rootDir ) {
-		$this->params = require $rootDir . '/config/params.php';
-		$this->assets = require $rootDir . '/config/assets.php';
+		$this->rootDir = $rootDir;
 	}
 
 	/**
@@ -96,17 +95,11 @@ class View {
 	 */
 	public function renderView(
 		string $view,
-		array $params
+		array $params = []
 	): array|bool|string {
-		$layoutName = App::$app->layout;
-
-		if ( App::$app->controller ) {
-			$layoutName = App::$app->controller->layout;
-		}
-
 		$viewContent = $this->renderContent( $view, $params );
 		ob_start();
-		require App::$rootDir . "/views/layouts/$layoutName.php";
+		require $this->rootDir . "/views/layouts/$this->layout.php";
 		$layoutContent = ob_get_clean();
 
 		return str_replace( '{{content}}', $viewContent, $layoutContent );
@@ -120,12 +113,18 @@ class View {
 	 *
 	 * @return false|string
 	 */
-	public function renderContent( string $view, array $params ): bool|string {
-		foreach ( $params as $key => $value ) {
-			$$key = $value;
+	public function renderContent(
+		string $view,
+		array $params = []
+	): bool|string {
+		if ( ! empty( $params ) ) {
+			foreach ( $params as $key => $value ) {
+				$$key = $value;
+			}
 		}
+
 		ob_start();
-		require App::$rootDir . "/views/$view.php";
+		require $this->rootDir . "/views/$view.php";
 
 		return ob_get_clean();
 	}

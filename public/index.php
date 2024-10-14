@@ -7,32 +7,22 @@
  * @time        12:37 AM
  */
 
-use app\http\Home;
+use app\events\AfterRequest;
+use app\events\BeforeRequest;
 use app\system\App;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new App( dirname( __DIR__ ) );
 
-/* Routes:
-e.g:
-// If the page has get method:
-$app->router->get('url', [Controller::class, 'method']);
-$app->router->get('url/{id}', [Controller::class, 'method']);
-$app->router->get('url/{id:\d+}/{username}', [Controller::class, 'method']);
+$app->setEvent( App::EVENT_BEFORE_REQUEST, function () {
+	BeforeRequest::invoke();
+} );
 
-// If the page has post method:
-$app->router->post('url', [Controller::class, 'method']));
-*/
+require_once __DIR__ . '/../config/routes.php';
 
-/**
- * --------------------------------------------------------
- * Web routes.
- * --------------------------------------------------------
- */
-$app->router->get( 'home', [ Home::class, 'index' ] );
+$app->setEvent( App::EVENT_AFTER_REQUEST, function () {
+	AfterRequest::invoke();
+} );
 
-/**
- * Execute.
- */
 $app->run();

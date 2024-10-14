@@ -29,11 +29,9 @@ class Router {
 
 	/**
 	 * Constructor.
-	 *
-	 * @param  Request  $request
 	 */
-	public function __construct( Request $request ) {
-		$this->request = $request;
+	public function __construct() {
+		$this->request = new Request();
 	}
 
 	/**
@@ -58,6 +56,42 @@ class Router {
 	 */
 	public function post( string $url, mixed $callback ): void {
 		$this->routeMap['post'][ $url ] = $callback;
+	}
+
+	/**
+	 * The put router.
+	 *
+	 * @param  string  $url
+	 * @param  mixed  $callback
+	 *
+	 * @return void
+	 */
+	public function put( string $url, mixed $callback ): void {
+		$this->routeMap['put'][ $url ] = $callback;
+	}
+
+	/**
+	 * The patch router.
+	 *
+	 * @param  string  $url
+	 * @param  mixed  $callback
+	 *
+	 * @return void
+	 */
+	public function patch( string $url, mixed $callback ): void {
+		$this->routeMap['patch'][ $url ] = $callback;
+	}
+
+	/**
+	 * The delete router.
+	 *
+	 * @param  string  $url
+	 * @param  mixed  $callback
+	 *
+	 * @return void
+	 */
+	public function delete( string $url, mixed $callback ): void {
+		$this->routeMap['delete'][ $url ] = $callback;
 	}
 
 	/**
@@ -95,7 +129,7 @@ class Router {
 
 			$routeRegex = "@^" . preg_replace_callback( '/{\w+(:([^}]+))?}/',
 					function ( $m ) {
-						return isset( $m[2] ) ? "({$m[2]})" : '(\w+)';
+						return isset( $m[2] ) ? "($m[2])" : '(\w+)';
 					},
 					$route ) . "$@";
 
@@ -137,17 +171,25 @@ class Router {
 		}
 
 		if ( is_string( $callback ) ) {
-			return App::$app->view->renderView( $callback, [] );
+			return App::$app->view->renderView( $callback );
 		}
 
 		if ( is_array( $callback ) ) {
 			/**
 			 * @var Controller $controller
 			 */
-			$controller           = new $callback[0]();
-			$controller->action   = $callback[1];
-			App::$app->controller = $controller;
-			$callback[0]          = $controller;
+			$controller         = new $callback[0]();
+			$controller->action = $callback[1];
+			$middlewares        = $controller->getMiddlewares();
+
+			foreach ( $middlewares as $middleware ) {
+				/**
+				 * @var Middleware $middleware
+				 */
+				$middleware->invoke();
+			}
+
+			$callback[0] = $controller;
 		}
 
 		return call_user_func( $callback, $this->request );

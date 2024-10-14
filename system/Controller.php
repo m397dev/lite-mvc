@@ -26,21 +26,9 @@ namespace app\system;
 class Controller {
 
 	/**
-	 * @var string $layout Name of the layout file
-	 */
-	public string $layout = 'main';
-	/**
 	 * @var string $action Action name
 	 */
 	public string $action = 'index';
-	/**
-	 * @var Request $request Instance of the Request class
-	 */
-	public Request $request;
-	/**
-	 * @var array $data Data in the request body
-	 */
-	public array $data = [];
 	/**
 	 * @var array $params Web params configuration
 	 */
@@ -139,14 +127,36 @@ class Controller {
 		"echo.*kae",
 		"=%27$",
 	];
+	/**
+	 * @var array $middlewares List of middlewares
+	 */
+	protected array $middlewares = [];
 
 	/**
 	 * Controller constructor.
 	 */
 	public function __construct() {
-		$this->request = new Request();
-		$this->data    = $this->request->getBody();
 		$this->secureHttp();
+	}
+
+	/**
+	 * Register new middleware.
+	 *
+	 * @param  Middleware  $middleware
+	 *
+	 * @return void
+	 */
+	public function registerMiddleware( Middleware $middleware ): void {
+		$this->middlewares[] = $middleware;
+	}
+
+	/**
+	 * Return list of current middlewares.
+	 *
+	 * @return array
+	 */
+	public function getMiddlewares(): array {
+		return $this->middlewares;
 	}
 
 	/**

@@ -7,8 +7,9 @@
  * @time        12:42 AM
  */
 
-namespace app\http;
+namespace app\http\controllers;
 
+use app\http\middlewares\Auth;
 use app\system\App;
 use app\system\Controller;
 
@@ -18,12 +19,20 @@ use app\system\Controller;
 class Home extends Controller {
 
 	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
+		$this->registerMiddleware( new Auth( [ 'index' ] ) );
+	}
+
+	/**
 	 * Default action.
 	 *
 	 * @return string
 	 */
 	public function index(): string {
-		return App::$app->view->renderView( 'home', [] );
+		return App::$app->view->renderView( 'welcome' );
 	}
 
 }
