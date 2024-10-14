@@ -1,0 +1,14 @@
+<?php
+/**
+ * @project     lite-mvc
+ * @author      M397
+ * @email       m397.dev@gmail.com
+ * @date        10/15/2024
+ * @time        12:37 AM
+ */
+
+namespace app\models;
+
+class User {
+
+}

@@ -1,0 +1,19 @@
+# Ide
+.idea
+.vscode
+
+# Composer
+vendor
+
+# Cache and Logs
+writable/cache/*
+writable/logs/*
+writable/tmp/*
+*.cache
+*.log
+
+# Excepts
+!writable/cache/.gitkeep
+!writable/logs/.gitkeep
+!writable/tmp/.gitkeep
+!public/assets/vendor

@@ -1,0 +1,38 @@
+{
+  "name": "m397dev/lite-mvc",
+  "authors": [
+    {
+      "name": "m397dev",
+      "email": "m397.dev@gmail.com"
+    }
+  ],
+  "description": "The minimal MVC framework for PHP.",
+  "keywords": [
+    "php",
+    "oop",
+    "mvc",
+    "framework"
+  ],
+  "license": "MIT",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "app\\": "."
+    }
+  },
+  "require": {
+    "php": "^8.3",
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "ext-fileinfo": "*",
+    "ext-curl": "*",
+    "ext-exif": "*",
+    "phpfastcache/phpfastcache": "^9.2",
+    "gregwar/captcha": "1.*",
+    "phpmailer/phpmailer": "^6.9",
+    "nilportugues/sql-query-builder": "^1.8"
+  },
+  "require-dev": {
+    "maximebf/debugbar": "1.*"
+  }
+}
