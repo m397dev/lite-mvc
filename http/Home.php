@@ -7,8 +7,23 @@
  * @time        12:42 AM
  */
 
-namespace http;
+namespace app\http;
 
-class Home {
+use app\system\App;
+use app\system\Controller;
+
+/**
+ * Default controller.
+ */
+class Home extends Controller {
+
+	/**
+	 * Default action.
+	 *
+	 * @return string
+	 */
+	public function index(): string {
+		return App::$app->view->renderView( 'home', [] );
+	}
 
 }

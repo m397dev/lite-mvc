@@ -50,7 +50,7 @@ class Controller {
 	 */
 	public string $error = '';
 	/**
-	 * @var array|string[] $_patterns SQL injection patterns
+	 * @var array|string[] $patterns SQL injection patterns
 	 */
 	private array $patterns = [
 		"union",
@@ -147,15 +147,6 @@ class Controller {
 		$this->request = new Request();
 		$this->data    = $this->request->getBody();
 		$this->secureHttp();
-	}
-
-	/**
-	 * Set layout.
-	 *
-	 * @param  string  $layout
-	 */
-	public function setLayout( string $layout ): void {
-		$this->layout = $layout;
 	}
 
 	/**

@@ -1,8 +1,13 @@
-<?php
-/**
- * @project     lite-mvc
- * @author      M397
- * @email       m397.dev@gmail.com
- * @date        10/15/2024
- * @time        12:39 AM
- */
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Lite MVC</title>
+</head>
+<body>
+{{content}}
+</body>
+</html>
